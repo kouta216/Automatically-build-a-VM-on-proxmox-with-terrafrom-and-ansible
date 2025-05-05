@@ -1,0 +1,64 @@
+---
+- name: Update APT package cache
+  apt:
+    update_cache: yes
+
+- name: Upgrade all packages to the latest version
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Install basic utility packages
+  apt:
+    name:
+      - vim
+      - less
+      - sudo
+      - htop
+      - expect
+      - tree
+      - acl
+      - bash-completion
+      - zip
+      - unzip
+      - dos2unix
+      - apt-utils
+      - software-properties-common
+      - apt-transport-https
+      - jq
+      - iputils-tracepath
+      - iputils-ping
+      - ca-certificates
+      - bind9-utils
+      - net-tools
+      - traceroute
+      - nmap
+      - netcat-openbsd
+      - dnsutils
+      - curl
+      - git
+      - wget
+      - telnet
+      - nfs-common
+      - smbclient
+      - cifs-utils
+      - openssh-client
+      - openssh-server
+      - lynx
+      - python3-pip
+      - qemu-guest-agent
+      - language-pack-ja
+    state: present
+
+- name: Enable and start qemu-guest-agent service
+  systemd:
+    name: qemu-guest-agent
+    enabled: yes
+    state: started
+
+- name: Set system locale to Japanese
+  command: localectl set-locale LANG=ja_JP.UTF-8 LANGUAGE="ja_JP:ja"
+
+- name: Set timezone to Asia/Tokyo
+  timezone:
+    name: Asia/Tokyo

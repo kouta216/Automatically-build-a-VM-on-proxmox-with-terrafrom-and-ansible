@@ -1,0 +1,21 @@
+---
+- name: Ubuntu Initial Setup
+  hosts: all
+  become: yes
+  roles:
+    - ubuntu-setup
+
+- name: Docker Setup
+  hosts: all
+  become: yes
+  roles:
+    - docker
+
+- name: Reboot the server
+  hosts: all
+  become: yes
+  tasks:
+    - name: Reboot after all setups
+      reboot:
+        msg: "Reboot initiated by Ansible after full setup."
+        reboot_timeout: 600
