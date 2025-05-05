@@ -10,17 +10,23 @@ resource "proxmox_vm_qemu" "docker-vm" {
   agent       = 1
   qemu_os     = "l26" 
   
-  disk {
-      slot    = "scsi0"
-      type    = "disk"
-      storage = "local-lvm"
-      size    = "50G"
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          storage = "local-lvm"
+          size    = "50G"  
+        }
+      }
      }
 
-  disk {
-    storage = "local-lvm"
-    type    = "cloudinit"
-    slot    = "ide2"
+    ide {
+      ide2 {
+        cloudinit {
+          storage = "local-lvm"
+        }
+      }
+    }
   }
 
   network {
